@@ -1,4 +1,6 @@
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
+
+import questionsData from "../data/questions.json";
 
 import Header from "./Header";
 import Main from "./Main";
@@ -13,11 +15,13 @@ import Footer from "./Footer";
 import Timer from "./Timer";
 
 const SECS_PER_QUESTION = 30;
+const questions = questionsData.questionsData;
+
 
 const initialState = {
-  questions: [],
+  questions: questions,
   // 'loading', 'error', 'ready', 'active', 'finished
-  status: "loading",
+  status: "ready",
   index: 0,
   answer: null,
   points: 0,
@@ -81,12 +85,12 @@ export default function App() {
   const numQuestions = questions.length;
   const maxPossiblePoints = questions.reduce((prev, cur) => prev + cur.points, 0);
 
-  useEffect(function () {
-    fetch("http://localhost:8000/questions")
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch((err) => dispatch({ type: "dataFailed" }));
-  }, []);
+  // useEffect(function () {
+  //   fetch("http://localhost:8000/questions")
+  //     .then((res) => res.json())
+  //     .then((data) => dispatch({ type: "dataReceived", payload: data }))
+  //     .catch((err) => dispatch({ type: "dataFailed" }));
+  // }, []);
 
   return (
     <div className="app">
